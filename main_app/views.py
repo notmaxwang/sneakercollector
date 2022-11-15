@@ -1,9 +1,6 @@
 from django.shortcuts import render
+from .models import Sneaker
 
-sneakers = [
-    {'name': 'Jordan 1', 'colorway': 'Bred', 'retail_price': '$190'},
-    {'name': 'Jordan 3', 'colorway': 'Black Cement', 'retail_price': '$220'},
-]
 
 # Create your views here.
 
@@ -14,6 +11,11 @@ def about(request):
     return render(request, 'about.html')
 
 def sneakers_index(request):
+    sneakers = Sneaker.objects.all()
     return render(request, 'sneakers/index.html', {
         'sneakers': sneakers
     })
+
+def sneakers_detail(request, sneaker_id):
+    sneaker = Sneaker.objects.get(id=sneaker_id)
+    return render(request, 'sneakers/detail.html', {'sneaker': sneaker})
