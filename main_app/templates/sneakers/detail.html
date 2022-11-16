@@ -9,6 +9,10 @@
         <p>Colorway: {{ sneaker.colorway }}</p>
         <p>Retaul Price: {{ sneaker.retail_price }}</p>
     </div>
+    <div class="card-action">
+        <a href="{% url 'sneakers_update' sneaker.id %}">Edit</a>
+        <a href="{% url 'sneakers_delete' sneaker.id %}">Delete</a>
+    </div>
 </div>
 
 
