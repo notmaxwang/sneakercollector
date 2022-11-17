@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+import datetime
 
 # Create your models here.
 
@@ -13,4 +14,16 @@ class Sneaker(models.Model):
 
     def get_absolute_url(self):
         return reverse('detail', kwargs={'sneaker_id': self.id})
+
+
+class Shoelace(models.Model):
+    date = models.DateField('Shoelace Changed Date')
+    color = models.TextField(default="red")
+    sneaker = models.ForeignKey(Sneaker, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Switch {self.sneaker.name} shoelaces on {self.date} to color {self.color}"
+
+    class Meta:
+        ordering = ['-date']
 

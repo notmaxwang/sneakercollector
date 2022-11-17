@@ -13,7 +13,38 @@
         <a href="{% url 'sneakers_update' sneaker.id %}">Edit</a>
         <a href="{% url 'sneakers_delete' sneaker.id %}">Delete</a>
     </div>
+    <div class="col s6">
+        <form action="{% url 'add_shoelace' sneaker.id %}" method="POST">
+            {% csrf_token %}
+            <!-- Render the inputs -->
+            {{ shoelace_form.as_p }}
+            <input type="submit" class="btn" value="Add Shoelace">
+        </form>
+        <table class="striped">
+          <thead>
+            <tr><th>Date</th><th>Shoelace Color</th></tr>
+          </thead>
+          <tbody>
+            {% for shoelace in sneaker.shoelace_set.all %}
+              <tr>
+                <td>{{shoelace.date}}</td>
+                <td>{{shoelace.color}}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
 </div>
 
+<script>
+    const dateEl = document.getElementById('id_date');
+    // M is Materialize's global variable
+    M.Datepicker.init(dateEl, {
+      format: 'yyyy-mm-dd',
+      defaultDate: new Date(),
+      setDefaultDate: true,
+      autoClose: true
+    });
+</script>
 
 {% endblock %}
