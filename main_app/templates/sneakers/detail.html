@@ -37,7 +37,28 @@
           {% endfor %}
         </tbody>
       </table>
-  </div> 
+    </div> 
+  </div>
+
+<hr>
+<div class="row">
+  <div class="col s6">
+    <h3>{{ sneaker.name }}'s Shoelaces</h3>
+    {% if sneaker.shoelaces.count %}
+      {% for shoelace in sneaker.shoelaces.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              A pair of <span style="color: {{ shoelace.color }}">{{ shoelace.color }}</span> laces.
+            </span>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>No New Shoelaces added Yet</h5>
+    {% endif %}
+  </div>
+  <!-- Available toys will come after this line -->
 </div>
 
 <script>
