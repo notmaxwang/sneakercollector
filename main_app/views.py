@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import CleanedForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Sneaker
+from .models import Sneaker, Shoelace
 
 
 # Create your views here.
@@ -20,9 +20,15 @@ def sneakers_index(request):
 
 def sneakers_detail(request, sneaker_id):
     sneaker = Sneaker.objects.get(id=sneaker_id)
+    
+    id_list = sneaker.shoelaces.all().values_list('id')
+    laces_sneaker_doesnt_have = Shoelace.objects.exclude(id__in=id_list)
+
     cleaned_form = CleanedForm()
+
     return render(request, 'sneakers/detail.html', {
-        'sneaker': sneaker, 'cleaned_form': cleaned_form
+        'sneaker': sneaker, 'cleaned_form': cleaned_form,
+        'shoelaces': laces_sneaker_doesnt_have
     })
 
 
@@ -35,9 +41,14 @@ def add_cleaned(request, sneaker_id):
     return redirect('detail', sneaker_id = sneaker_id)
 
 
+def assoc_shoelace(request, sneaker_id, shoelace_id):
+    Sneaker.objects.get(id=sneaker_id).shoelaces.add(shoelace_id)
+    return redirect('detail', sneaker_id=sneaker_id)
+
+
 class SneakerCreate(CreateView):
     model = Sneaker
-    fields = '__all__'
+    fields = ['name', 'colorway', 'retail_price']
     success_url = '/sneakers'
 
 class SneakerUpdate(UpdateView):
@@ -48,5 +59,8 @@ class SneakerUpdate(UpdateView):
 class SneakerDelete(DeleteView):
     model = Sneaker
     success_url = '/sneakers'
+
+
+
 
 

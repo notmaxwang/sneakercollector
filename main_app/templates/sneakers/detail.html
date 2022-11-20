@@ -61,6 +61,29 @@
   <!-- Available toys will come after this line -->
 </div>
 
+<div class="col s6">
+  <h3>Available Shoelaces</h3>
+  {% if shoelaces.count %}
+    {% for shoelace in shoelaces.all %}
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">
+            A pair of<span style="color: {{ shoelace.color }}">{{ shoelace.color }}</span> laces.
+          </span>
+        </div>
+        <div class="card-action">
+          <form action="{% url 'assoc_shoelace' sneaker_id shoelace_id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn">Add</button>
+          </form>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <h5>{{sneaker.name}} Already Has All Laces Available</h5>
+  {% endif %}
+</div>
+
 <script>
     const dateEl = document.getElementById('id_date');
     // M is Materialize's global variable
