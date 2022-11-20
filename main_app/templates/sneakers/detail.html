@@ -17,28 +17,27 @@
   </div>
 
 
-      <div class="col s6">
-          <form action="{% url 'add_shoelace' sneaker.id %}" method="POST">
-              {% csrf_token %}
-              <!-- Render the inputs -->
-              {{ shoelace_form.as_p }}
-              <input type="submit" class="btn" value="Add Shoelace">
-          </form>
-          <table class="striped">
-            <thead>
-              <tr><th>Date</th><th>Shoelace Color</th></tr>
-            </thead>
-            <tbody>
-              {% for shoelace in sneaker.shoelace_set.all %}
-                <tr>
-                  <td>{{shoelace.date}}</td>
-                  <td>{{shoelace.color}}</td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-      </div>
-  
+  <div class="col s6">
+      <form action="{% url 'add_cleaned' sneaker.id %}" method="POST">
+          {% csrf_token %}
+          <!-- Render the inputs -->
+          {{ cleaned_form.as_p }}
+          <input type="submit" class="btn" value="Add Cleaning">
+      </form>
+      <table class="striped">
+        <thead>
+          <tr><th>Date</th><th>Cleaning Product</th></tr>
+        </thead>
+        <tbody>
+          {% for cleaned in sneaker.cleaned_set.all %}
+            <tr>
+              <td>{{cleaned.date}}</td>
+              <td>{{cleaned.product}}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  </div> 
 </div>
 
 <script>

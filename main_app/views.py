@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import ShoelaceForm
+from .forms import CleanedForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Sneaker
 
@@ -20,18 +20,18 @@ def sneakers_index(request):
 
 def sneakers_detail(request, sneaker_id):
     sneaker = Sneaker.objects.get(id=sneaker_id)
-    shoelace_form = ShoelaceForm()
+    cleaned_form = CleanedForm()
     return render(request, 'sneakers/detail.html', {
-        'sneaker': sneaker, 'shoelace_form': shoelace_form
+        'sneaker': sneaker, 'cleaned_form': cleaned_form
     })
 
 
-def add_shoelace(request, sneaker_id):
-    form = ShoelaceForm(request.POST)
+def add_cleaned(request, sneaker_id):
+    form = CleanedForm(request.POST)
     if form.is_valid():
-        new_shoelace = form.save(commit=False)
-        new_shoelace.sneaker_id = sneaker_id
-        new_shoelace.save()
+        new_cleaned = form.save(commit=False)
+        new_cleaned.sneaker_id = sneaker_id
+        new_cleaned.save()
     return redirect('detail', sneaker_id = sneaker_id)
 
 

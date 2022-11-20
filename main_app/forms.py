@@ -1,7 +1,7 @@
 from django.forms import ModelForm
-from .models import Shoelace
+from .models import Cleaned
 
-class ShoelaceForm(ModelForm):
+class CleanedForm(ModelForm):
     class Meta:
-        model = Shoelace
-        fields = ['date', 'color']
+        model = Cleaned
+        fields = ['date', 'product']
