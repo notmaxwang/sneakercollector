@@ -52,6 +52,12 @@
               A pair of <span style="color: {{ shoelace.color }}">{{ shoelace.color }}</span> laces.
             </span>
           </div>
+          <div class="card-action">
+            <form action="{% url 'unassoc_shoelace' sneaker.id shoelace.id %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn">Remove</button>
+            </form>
+          </div>
         </div>
       {% endfor %}
     {% else %}

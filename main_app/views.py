@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import CleanedForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView
 from .models import Sneaker, Shoelace
 
 
@@ -45,6 +46,10 @@ def assoc_shoelace(request, sneaker_id, shoelace_id):
     Sneaker.objects.get(id=sneaker_id).shoelaces.add(shoelace_id)
     return redirect('detail', sneaker_id=sneaker_id)
 
+def unassoc_shoelace(request, sneaker_id, shoelace_id):
+    Sneaker.objects.get(id=sneaker_id).shoelaces.remove(shoelace_id)
+    return redirect('detail', sneaker_id=sneaker_id)
+
 
 class SneakerCreate(CreateView):
     model = Sneaker
@@ -60,6 +65,25 @@ class SneakerDelete(DeleteView):
     model = Sneaker
     success_url = '/sneakers'
 
+
+
+class ShoelaceList(ListView):
+    model = Shoelace
+
+class ShoelaceDetail(DeleteView):
+    model = Shoelace
+
+class ShoelaceCreate(CreateView):
+    model = Shoelace
+    fields = '__all__'
+
+class ShoelaceUpdate(UpdateView):
+    model = Shoelace
+    fields = ['color']
+
+class ShoelaceDelete(DeleteView):
+    model = Shoelace
+    success_url = '/shoelaces'
 
 
 
